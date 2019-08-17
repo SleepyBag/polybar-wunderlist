@@ -1,0 +1,5 @@
+#!/bin/zsh
+content=`wunderline list inbox`
+content=${content// /}
+content=${content//☆/ | }
+echo $content | tail -n +2 | paste -s -d ''
