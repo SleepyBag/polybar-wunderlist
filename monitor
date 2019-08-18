@@ -1,1 +1,2 @@
+cd /home/$USER/scripts/polybar/wunderlist/
 inotifywait -qm --event modify --format '%w' content index | ./echoer

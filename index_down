@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+cd /home/$USER/scripts/polybar/wunderlist/
 index=`cat index`
 index=$((index - 1))
 echo $index > index
