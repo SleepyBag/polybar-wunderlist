@@ -1,0 +1,28 @@
+#!/bin/zsh
+bar=1
+while [[ $bar = 1 ]] || read foo 
+do
+  bar=0
+  if [[ -e content && -e index ]] {
+    content=(`cat content`)
+    index=(`cat index`)
+    index=$((index % $#content))
+    if [[ index < 0 ]] {
+      index=$((index + $#content))
+    }
+    ans=$content[$((index + 1))]
+    for item ({1..$#content}) {
+      if [[ $((item - 1)) = $index ]] {
+        item_content=$content[$item]
+        ans+=" | %{u#ff9900}%{+u}$item_content[1,2]%{u-}%{-u}"
+      } else {
+        item_content=$content[$item]
+        ans+=" | $item_content[1,2]"
+      }
+    }
+    # echo $content
+    # echo $index
+    # echo $content[$index]
+    echo $ans
+  }
+done

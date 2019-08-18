@@ -1,0 +1,1 @@
+inotifywait -qm --event modify --format '%w' content index | ./echoer

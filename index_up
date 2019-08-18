@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+index=`cat index`
+index=$((index + 1))
+echo $index > index

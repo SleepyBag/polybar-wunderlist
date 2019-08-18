@@ -1,5 +1,30 @@
 #!/bin/zsh
+
+# if [[ -e content && -e index ]] {
+#   content=(`cat content`)
+#   index=(`cat index`)
+#   index=$((index % $#content))
+#   if [[ index < 0 ]] {
+#     index=$((index + $#content))
+#   }
+#   # echo $content
+#   # echo $index
+#   echo $content[$index]
+# }
+# if [[ $WUNDERLIST_CONTENT && $WUNDERLIST_INDEX ]] {
+#   content=(`echo $WUNDERLIST_CONTENT`)
+#   echo $content[$WUNDERLIST_INDEX]
+# }
+if ! [[ -e index ]] {
+  echo 1 > index
+  # export WUNDERLIST_INDEX=1
+}
 content=`wunderline list inbox`
 content=${content// /}
-content=${content//☆/ | }
-echo $content | tail -n +2 | paste -s -d ''
+content=${content//☆/}
+# content=(`echo $content | tail -n +2 | paste -s -d ''`)
+content=`echo $content | tail -n +2`
+echo $content > content
+# export WUNDERLIST_CONTENT=$content
+# echo $WUNDERLIST_CONTENT
+# echo $content
