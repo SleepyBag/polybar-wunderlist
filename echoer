@@ -1,8 +1,23 @@
 #!/bin/zsh
-bar=1
-while [[ $bar = 1 ]] || read foo 
+rb=$(($RANDOM % 256))
+re=$(($RANDOM % 256))
+gb=$(($RANDOM % 256))
+ge=$(($RANDOM % 256))
+bb=$(($RANDOM % 256))
+be=$(($RANDOM % 256))
+
+virgin=1
+while [[ $virgin = 1 ]] || read foo 
 do
-  bar=0
+  virgin=0
+  if [[ $foo == content ]] {
+    rb=$(($RANDOM % 256))
+    re=$(($RANDOM % 256))
+    gb=$(($RANDOM % 256))
+    ge=$(($RANDOM % 256))
+    bb=$(($RANDOM % 256))
+    be=$(($RANDOM % 256))
+  }
   if [[ -e content && -e index ]] {
     content=(`cat content`)
     index=(`cat index`)
@@ -10,14 +25,21 @@ do
     if [[ index < 0 ]] {
       index=$((index + $#content))
     }
-    ans=$content[$((index + 1))]
+    # ans=$content[$((index + 1))]
+    ans=""
     for item ({1..$#content}) {
+      r=$(($rb + ($re - $rb) / $#content * $item))
+      g=$(($gb + ($ge - $gb) / $#content * $item))
+      b=$(($bb + ($be - $bb) / $#content * $item))
+      r=$(printf "%02x" r)
+      g=$(printf "%02x" g)
+      b=$(printf "%02x" b)
       if [[ $((item - 1)) = $index ]] {
         item_content=$content[$item]
-        ans+=" | %{u#ff9900}%{+u}$item_content[1,2]%{u-}%{-u}"
+        ans+=" %{o#$r$g$b}%{+o}$item_content%{o-}%{-o}"
       } else {
         item_content=$content[$item]
-        ans+=" | $item_content[1,2]"
+        ans+=" %{u#$r$g$b}%{+u}$item_content[1,2]%{u-}%{-u}"
       }
     }
     # echo $content

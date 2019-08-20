@@ -20,8 +20,8 @@ if ! [[ -e index ]] {
   # export WUNDERLIST_INDEX=1
 }
 content=`wunderline list inbox`
-content=${content// /}
 content=${content//☆/}
+content=$(echo $content | awk '{$1=$1};1')
 # content=(`echo $content | tail -n +2 | paste -s -d ''`)
 content=`echo $content | tail -n +2`
 content_before=$(cat content)
