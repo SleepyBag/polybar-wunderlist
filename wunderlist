@@ -24,7 +24,10 @@ content=${content// /}
 content=${content//☆/}
 # content=(`echo $content | tail -n +2 | paste -s -d ''`)
 content=`echo $content | tail -n +2`
-echo $content > content
+content_before=$(cat content)
+if [[ content != content_before ]] {
+  echo $content > content
+}
 # export WUNDERLIST_CONTENT=$content
 # echo $WUNDERLIST_CONTENT
 # echo $content
