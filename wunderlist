@@ -19,14 +19,17 @@ if ! [[ -e index ]] {
   echo 1 > index
   # export WUNDERLIST_INDEX=1
 }
-content=`wunderline list inbox`
-content=${content//☆/}
-content=$(echo $content | awk '{$1=$1};1')
-# content=(`echo $content | tail -n +2 | paste -s -d ''`)
-content=`echo $content | tail -n +2`
-content_before=$(cat content)
-if [[ content != content_before ]] {
-  echo $content > content
+content=`wunderline list inbox || echo error`
+if [[ content != error ]] {
+  content=${content//☆/}
+  content=$(echo $content | awk '{$1=$1};1')
+  content=${content// /\\ }
+  # content=(`echo $content | tail -n +2 | paste -s -d ''`)
+  content=`echo $content | tail -n +2`
+  content_before=$(cat content)
+  if [[ content != content_before ]] {
+    echo $content > content
+  }
 }
 # export WUNDERLIST_CONTENT=$content
 # echo $WUNDERLIST_CONTENT

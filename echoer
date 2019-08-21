@@ -19,29 +19,33 @@ do
     be=$(($RANDOM % 256))
   }
   if [[ -e content && -e index ]] {
-    content=(`cat content`)
+    content=`cat content`
+    len=$(echo $content | wc -l)
     index=(`cat index`)
-    index=$((index % $#content))
+    index=$((index % $len))
     if [[ index < 0 ]] {
-      index=$((index + $#content))
+      index=$((index + $len))
     }
     # ans=$content[$((index + 1))]
     ans=""
-    for item ({1..$#content}) {
-      r=$(($rb + ($re - $rb) / $#content * $item))
-      g=$(($gb + ($ge - $gb) / $#content * $item))
-      b=$(($bb + ($be - $bb) / $#content * $item))
+    item=0
+    echo $content | while read cur_content
+    do
+      item=$(($item + 1))
+      r=$(($rb.0 + ($re.0 - $rb.0) / $len.0 * $item.0))
+      g=$(($gb.0 + ($ge.0 - $gb.0) / $len.0 * $item.0))
+      b=$(($bb.0 + ($be.0 - $bb.0) / $len.0 * $item.0))
       r=$(printf "%02x" r)
       g=$(printf "%02x" g)
       b=$(printf "%02x" b)
       if [[ $((item - 1)) = $index ]] {
-        item_content=$content[$item]
+        item_content=$cur_content
         ans+=" %{o#$r$g$b}%{+o}$item_content%{o-}%{-o}"
       } else {
-        item_content=$content[$item]
+        item_content=$cur_content
         ans+=" %{u#$r$g$b}%{+u}$item_content[1,2]%{u-}%{-u}"
       }
-    }
+    done
     # echo $content
     # echo $index
     # echo $content[$index]
