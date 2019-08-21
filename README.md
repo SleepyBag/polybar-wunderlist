@@ -1,8 +1,9 @@
 # polybar-wunderlist
 Wunderlist module for polybar.
 
-# Requirements
+# Dependencies
 * zsh (located at /bin/zsh, or you will need to modify the path of zsh in the scripts)
+* inotifywait
 * [wunderline](https://github.com/wayneashleyberry/wunderline)
 
 # Installation
