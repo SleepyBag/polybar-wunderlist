@@ -1,36 +1,44 @@
 #!/bin/zsh
+cd $(dirname $0)
 
-# if [[ -e content && -e index ]] {
-#   content=(`cat content`)
-#   index=(`cat index`)
-#   index=$((index % $#content))
-#   if [[ index < 0 ]] {
-#     index=$((index + $#content))
-#   }
-#   # echo $content
-#   # echo $index
-#   echo $content[$index]
-# }
-# if [[ $WUNDERLIST_CONTENT && $WUNDERLIST_INDEX ]] {
-#   content=(`echo $WUNDERLIST_CONTENT`)
-#   echo $content[$WUNDERLIST_INDEX]
-# }
-if ! [[ -e index ]] {
-  echo 1 > index
-  # export WUNDERLIST_INDEX=1
-}
-content=`wunderline list inbox || echo error`
-if [[ content != error ]] {
-  content=${content//☆/}
-  content=$(echo $content | awk '{$1=$1};1')
-  content=${content// /\\ }
-  # content=(`echo $content | tail -n +2 | paste -s -d ''`)
-  content=`echo $content | tail -n +2`
-  content_before=$(cat content)
-  if [[ content != content_before ]] {
-    echo $content > content
+while true; do
+  # if [[ -e content && -e index ]] {
+  #   content=(`cat content`)
+  #   index=(`cat index`)
+  #   index=$((index % $#content))
+  #   if [[ index < 0 ]] {
+  #     index=$((index + $#content))
+  #   }
+  #   # echo $content
+  #   # echo $index
+  #   echo $content[$index]
+  # }
+  # if [[ $WUNDERLIST_CONTENT && $WUNDERLIST_INDEX ]] {
+  #   content=(`echo $WUNDERLIST_CONTENT`)
+  #   echo $content[$WUNDERLIST_INDEX]
+  # }
+  if ! [[ -e index ]] {
+    echo 1 > index
+    # export WUNDERLIST_INDEX=1
   }
-}
+  content=`wunderline list inbox || echo error`
+  if [[ content != error ]] {
+    content=${content//☆/}
+    content=$(echo $content | awk '{$1=$1};1')
+    content=${content// /\\ }
+    # content=(`echo $content | tail -n +2 | paste -s -d ''`)
+    content=`echo $content | tail -n +2`
+    content_before=$(cat content)
+    # echo $content
+    # echo $content_before
+    if [[ ${content//\n/} != ${content_before//\n/} ]] {
+      echo $content > content
+    }
+  } else {
+    echo error
+  }
+  sleep 60
+done
 # export WUNDERLIST_CONTENT=$content
 # echo $WUNDERLIST_CONTENT
 # echo $content

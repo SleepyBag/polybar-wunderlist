@@ -19,5 +19,5 @@ scroll-down = "/path/to/wunderlist/index_up"
 ```
 
 # Usage
-Initially, run **watch -n 60 ./wunderlist** at background, it will update the content file at every minute.
+Initially, run **./wunderlist** at background, it will update the content file every several tens of seconds.
 Then you are easy to go, add the modul into your bar and it will show a list of your undo items. Scroll on the module to select which item to expand.
